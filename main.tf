@@ -3,4 +3,5 @@ resource "digitalocean_droplet" "www" {
   name = "www"
   region = "sfo2"
   size = "s-1vcpu-1gb"
+  user_data = "${file("user_data.yaml")}"
 }
