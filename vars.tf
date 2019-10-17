@@ -18,3 +18,7 @@ variable "region" {
   default = "sfo2"
 }
 
+
+variable "ssh_fingerprint" {
+  default = ""
+}

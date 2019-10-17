@@ -7,4 +7,5 @@ resource "digitalocean_droplet" "droplet" {
   size = "${var.size}"
   region = "${var.region}"
   user_data = "${file("user-data.yaml")}"
+  # ssh_keys = ["${var.ssh_fingerprint}"]
 }
