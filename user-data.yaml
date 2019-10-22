@@ -1,0 +1,15 @@
+#cloud-config
+users:
+  - name: ltul
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    shell: /bin/bash
+    ssh_import_id:
+      - gh:yevgenybulochnik
+      - gh:bri997
+      - gh:jerrywardlow
+      - gh:sanchezricky
+      - gh:swhi3635
+      - gh:toozej
+      - gh:deetergp
+      - gh:objectsforheads
+      - gh:qpfiffer
