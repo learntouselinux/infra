@@ -14,3 +14,6 @@ users:
       - gh:objectsforheads
       - gh:qpfiffer
 disable_root: true
+package_update: true
+packages:
+  - fail2ban
