@@ -13,3 +13,4 @@ users:
       - gh:deetergp
       - gh:objectsforheads
       - gh:qpfiffer
+disable_root: true
