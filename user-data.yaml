@@ -4,12 +4,37 @@ users:
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     shell: /bin/bash
     ssh_import_id:
-      - gh:yevgenybulochnik
       - gh:bri997
+      - gh:deetergp
       - gh:jerrywardlow
+      - gh:objectsforheads
+      - gh:qpfiffer
       - gh:sanchezricky
       - gh:swhi3635
       - gh:toozej
-      - gh:deetergp
-      - gh:objectsforheads
-      - gh:qpfiffer
+      - gh:yevgenybulochnik
+
+package_update: true
+
+packages:
+  - apache2
+
+write_files:
+  - path: /etc/apache2/sites-available/learntouselinux.com.conf
+    content: |
+      <Virtualhost *:80>
+          Servername learntouselinux.com
+          DocumentRoot /var/www/learntouselinux.com
+      </Virtualhost>
+
+runcmd:
+  - a2dissite 000-default.conf
+  - rm /etc/apache2/sites-available/000-default.conf
+  - rm /etc/apache2/sites-available/default-ssl.conf
+  - rm -rf /var/www/html
+  - mkdir /var/www/learntouselinux.com
+  - a2ensite learntouselinux.com.conf
+  - git clone https://github.com/learntouselinux/app /tmp/app
+  - cp /tmp/app/index.html /var/www/learntouselinux.com
+  - chown -R www-data:www-data /var/www/learntouselinux.com
+  - systemctl reload apache2
