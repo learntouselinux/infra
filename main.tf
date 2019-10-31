@@ -1,6 +1,6 @@
 provider "digitalocean" {}
 
-resource "digitalocean_droplet" "droplet" {
+resource "digitalocean_droplet" "droplets" {
   count = "${var.droplet_count}"
   image = "${var.image}"
   name = "${var.name}"
