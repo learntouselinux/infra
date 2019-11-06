@@ -1,5 +1,5 @@
 #cloud-config
-# Create single user (ltul) with all team members SSH keys added to authorized keys.
+# Create single user (ltul) with all team members SSH keys added to authorized keys
 users:
   - name: ltul
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
@@ -15,14 +15,14 @@ users:
       - gh:toozej
       - gh:yevgenybulochnik
 
-# Update apt package cache.
+# Update apt package cache
 package_update: true
 
 # Install Apache
 packages:
   - apache2
 
-# Write virtual host file to Apache sites-available.
+# Write virtual host file to Apache sites-available
 write_files:
   - path: /etc/apache2/sites-available/learntouselinux.com.conf
     content: |
@@ -33,7 +33,7 @@ write_files:
 
 # Commands to setup apache and serve app indext.html
 runcmd:
-  # Disabled default sites and removed default virtual hosts.
+  # Disabled default sites and removed default virtual hosts
   - a2dissite 000-default.conf
   - rm /etc/apache2/sites-available/000-default.conf
   - rm /etc/apache2/sites-available/default-ssl.conf
