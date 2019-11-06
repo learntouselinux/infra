@@ -1,15 +1,54 @@
 #cloud-config
+# Create single user (ltul) with all team members SSH keys added to authorized keys
 users:
   - name: ltul
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     shell: /bin/bash
     ssh_import_id:
-      - gh:yevgenybulochnik
       - gh:bri997
+      - gh:deetergp
       - gh:jerrywardlow
+      - gh:objectsforheads
+      - gh:qpfiffer
       - gh:sanchezricky
       - gh:swhi3635
       - gh:toozej
-      - gh:deetergp
-      - gh:objectsforheads
-      - gh:qpfiffer
+      - gh:yevgenybulochnik
+
+# Update apt package cache
+package_update: true
+
+# Install Apache
+packages:
+  - apache2
+
+# Write virtual host file to Apache sites-available
+write_files:
+  - path: /etc/apache2/sites-available/learntouselinux.com.conf
+    content: |
+      <Virtualhost *:80>
+          Servername learntouselinux.com
+          DocumentRoot /var/www/learntouselinux.com
+      </Virtualhost>
+
+# Commands to setup apache and serve app indext.html
+runcmd:
+  # Disabled default sites and removed default virtual hosts
+  - a2dissite 000-default.conf
+  - rm /etc/apache2/sites-available/000-default.conf
+  - rm /etc/apache2/sites-available/default-ssl.conf
+  # Removing Apache default documentroot and create learntouselinux.com
+  - rm -rf /var/www/html
+  - mkdir /var/www/learntouselinux.com
+  # Enabling learntouselinux.com.conf
+  - a2ensite learntouselinux.com.conf
+  # Clone app repo to ltul ~
+  - git clone https://github.com/learntouselinux/app /home/ltul/app
+  # Change ownership of app repo from root to ltul
+  - chown -R ltul:ltul /home/ltul/app
+  # Symlink index.html file to learntouselinux.com
+  - ln -snf /home/ltul/app/index.html /var/www/learntouselinux.com
+  # Change ownership of learntouselinux.com from root to Apache(www-data)
+  - chown -R www-data:www-data /var/www/learntouselinux.com
+  # Reloading Apache2
+  - systemctl reload apache2
