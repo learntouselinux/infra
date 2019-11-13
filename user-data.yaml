@@ -33,6 +33,8 @@ write_files:
 
 # Commands to setup apache and serve app indext.html
 runcmd:
+  # Remove authorized SSH keys from 'root' user
+  - rm -f /root/.ssh/authorized_keys
   # Disabled default sites and removed default virtual hosts
   - a2dissite 000-default.conf
   - rm /etc/apache2/sites-available/000-default.conf
