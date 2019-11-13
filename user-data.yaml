@@ -21,6 +21,7 @@ package_update: true
 # Install Apache
 packages:
   - apache2
+  - fail2ban
 
 # Write virtual host file to Apache sites-available
 write_files:
